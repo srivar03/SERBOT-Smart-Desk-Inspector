@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Desk Inspector Dashboard</title>
+</head>
+<body>
+    <h1>Smart Desk Inspector — Event Log</h1>
+    <a href="/add_test_event">Add test event</a>
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>ID</th>
+            <th>Object / Status</th>
+            <th>Location</th>
+            <th>Timestamp</th>
+            <th>Photo</th>
+        </tr>
+        {% for event in events %}
+        <tr>
+            <td>{{ event['id'] }}</td>
+            <td>{{ event['object_or_status'] }}</td>
+            <td>{{ event['location'] }}</td>
+            <td>{{ event['timestamp'] }}</td>
+            <td><img src="{{ url_for('static', filename=event['photo_path']) }}" width="120"></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

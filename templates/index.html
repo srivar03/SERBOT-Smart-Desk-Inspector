@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SERBOT | Smart Desk Inspector</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+            background: #f4f6f8;
+            color: #1f2937;
+        }
+
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 18px 35px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+
+        .logo {
+            font-size: 27px;
+            font-weight: bold;
+        }
+
+
+        .online {
+            background: #16a34a;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+
+        .container {
+            max-width: 1400px;
+            margin: auto;
+            padding: 30px;
+        }
+
+
+        .title {
+            margin-bottom: 25px;
+        }
+
+
+        .title h1 {
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+
+
+        .title p {
+            color: #6b7280;
+        }
+
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.08);
+
+            margin-bottom: 20px;
+        }
+
+
+        .card h2 {
+            margin-bottom: 18px;
+            font-size: 20px;
+        }
+
+
+        .camera {
+            height: 380px;
+
+            background: #111827;
+
+            border-radius: 10px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            color: white;
+
+            font-size: 18px;
+
+            text-align: center;
+        }
+
+
+        .camera-icon {
+            font-size: 55px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 15px;
+        }
+
+
+        .stat {
+            background: #f8fafc;
+
+            padding: 18px;
+
+            border-radius: 10px;
+        }
+
+
+        .stat-title {
+            color: #6b7280;
+
+            font-size: 14px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .stat-value {
+            font-size: 21px;
+
+            font-weight: bold;
+        }
+
+
+        .green {
+            color: #16a34a;
+        }
+
+
+        .red {
+            color: #dc2626;
+        }
+
+
+        .blue {
+            color: #2563eb;
+        }
+
+
+        .orange {
+            color: #ea580c;
+        }
+
+
+        .detection {
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            padding: 14px 5px;
+
+            border-bottom:
+                1px solid #e5e7eb;
+        }
+
+
+        .detection:last-child {
+            border-bottom: none;
+        }
+
+
+        .confidence {
+            color: #16a34a;
+
+            font-weight: bold;
+        }
+
+
+        .mode {
+            background: #dcfce7;
+
+            color: #15803d;
+
+            padding: 15px;
+
+            border-radius: 10px;
+
+            text-align: center;
+
+            font-weight: bold;
+
+            margin-bottom: 18px;
+        }
+
+
+        .sensor {
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            padding: 12px 0;
+
+            border-bottom:
+                1px solid #eee;
+        }
+
+
+        .sensor:last-child {
+            border-bottom: none;
+        }
+
+
+        .environment {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 15px;
+        }
+
+
+        .environment-item {
+            background: #f8fafc;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            text-align: center;
+        }
+
+
+        .environment-icon {
+            font-size: 35px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .environment-title {
+            color: #6b7280;
+
+            font-size: 14px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .environment-status {
+            font-size: 22px;
+
+            font-weight: bold;
+        }
+
+
+        .alert {
+            background: #fff7ed;
+
+            border: 1px solid #fed7aa;
+
+            color: #c2410c;
+
+            padding: 15px;
+
+            border-radius: 10px;
+
+            margin-top: 15px;
+
+            font-weight: bold;
+
+            text-align: center;
+        }
+
+
+        .safe {
+            background: #f0fdf4;
+
+            border: 1px solid #bbf7d0;
+
+            color: #15803d;
+
+            padding: 15px;
+
+            border-radius: 10px;
+
+            margin-top: 15px;
+
+            font-weight: bold;
+
+            text-align: center;
+        }
+
+
+        .activity p {
+            padding: 10px 0;
+
+            border-bottom:
+                1px solid #eee;
+
+            color: #555;
+        }
+
+
+        .activity p:last-child {
+            border-bottom: none;
+        }
+
+
+        .update-time {
+            text-align: right;
+
+            color: #9ca3af;
+
+            font-size: 12px;
+
+            margin-top: 10px;
+        }
+
+
+        .connection {
+            padding: 10px;
+
+            border-radius: 8px;
+
+            text-align: center;
+
+            margin-bottom: 15px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+
+        .connected {
+            background: #dcfce7;
+
+            color: #15803d;
+        }
+
+
+        .disconnected {
+            background: #fee2e2;
+
+            color: #b91c1c;
+        }
+
+
+        @media (max-width: 900px) {
+
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+
+            .environment {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        🤖 SERBOT
+    </div>
+
+
+    <div class="online">
+        ● ONLINE
+    </div>
+
+</header>
+
+
+
+<div class="container">
+
+
+    <div class="title">
+
+        <h1>
+            Smart Desk Inspector
+        </h1>
+
+
+        <p>
+            Autonomous AI-Based Classroom Monitoring System
+        </p>
+
+    </div>
+
+
+
+    <div
+        id="connection"
+        class="connection disconnected">
+
+        Waiting for Flask / YOLO...
+
+    </div>
+
+
+
+    <div class="dashboard">
+
+
+        <!-- LEFT SIDE -->
+
+        <div>
+
+
+            <!-- CAMERA -->
+
+            <div class="card">
+
+                <h2>
+                    📷 Live Camera
+                </h2>
+
+
+                <div class="camera">
+
+                    <div>
+
+                        <span class="camera-icon">
+                            📷
+                        </span>
+
+
+                        <p>
+                            YOLO camera running on laptop
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- OBJECT DETECTION -->
+
+            <div class="card">
+
+                <h2>
+                    🔍 AI Object Detection
+                </h2>
+
+
+                <div
+                    class="detection-list"
+                    id="detections">
+
+                    <div class="detection">
+
+                        <span>
+                            Waiting for YOLO...
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CLASSROOM ENVIRONMENT -->
+
+            <div class="card">
+
+                <h2>
+                    💡 Classroom Environment
+                </h2>
+
+
+                <div class="environment">
+
+
+                    <div
+                        class="environment-item">
+
+                        <div
+                            class="environment-icon">
+
+                            💡
+
+                        </div>
+
+
+                        <div
+                            class="environment-title">
+
+                            Classroom Lights
+
+                        </div>
+
+
+                        <div
+                            id="lights"
+                            class="
+                            environment-status
+                            green
+                            ">
+
+                            OFF
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        class="environment-item">
+
+                        <div
+                            class="environment-icon">
+
+                            🌀
+
+                        </div>
+
+
+                        <div
+                            class="environment-title">
+
+                            Classroom Fans
+
+                        </div>
+
+
+                        <div
+                            id="fans"
+                            class="
+                            environment-status
+                            green
+                            ">
+
+                            OFF
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div id="energy-alert"></div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- RIGHT SIDE -->
+
+        <div>
+
+
+            <!-- ROBOT STATUS -->
+
+            <div class="card">
+
+                <h2>
+                    🤖 Robot Status
+                </h2>
+
+
+                <div class="mode">
+
+                    AUTONOMOUS MODE
+
+                </div>
+
+
+                <div class="stats">
+
+
+                    <div class="stat">
+
+                        <div
+                            class="stat-title">
+
+                            Status
+
+                        </div>
+
+
+                        <div
+                            id="robot-status"
+                            class="
+                            stat-value
+                            green
+                            ">
+
+                            Waiting
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="stat">
+
+                        <div
+                            class="stat-title">
+
+                            Battery
+
+                        </div>
+
+
+                        <div
+                            id="battery"
+                            class="stat-value">
+
+                            85%
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="stat">
+
+                        <div
+                            class="stat-title">
+
+                            Location
+
+                        </div>
+
+
+                        <div
+                            id="location"
+                            class="
+                            stat-value
+                            blue
+                            ">
+
+                            Unknown
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="stat">
+
+                        <div
+                            class="stat-title">
+
+                            Speed
+
+                        </div>
+
+
+                        <div
+                            id="speed"
+                            class="stat-value">
+
+                            Medium
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- OBSTACLE -->
+
+            <div class="card">
+
+                <h2>
+                    📡 Obstacle Detection
+                </h2>
+
+
+                <div class="sensor">
+
+                    <span>
+                        Front Distance
+                    </span>
+
+
+                    <strong
+                        id="distance"
+                        class="orange">
+
+                        0 cm
+
+                    </strong>
+
+                </div>
+
+
+                <div class="sensor">
+
+                    <span>
+                        Obstacle Status
+                    </span>
+
+
+                    <strong
+                        id="obstacle"
+                        class="green">
+
+                        Waiting
+
+                    </strong>
+
+                </div>
+
+
+                <div class="sensor">
+
+                    <span>
+                        Current Action
+                    </span>
+
+
+                    <strong
+                        id="action">
+
+                        Waiting
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ACTIVITY -->
+
+            <div
+                class="card activity">
+
+                <h2>
+                    📋 Recent Activity
+                </h2>
+
+
+                <div
+                    id="activity">
+
+                    <p>
+                        Waiting for YOLO...
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="update-time">
+
+                    Last updated:
+
+                    <span id="update-time">
+                        --
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+async function updateDashboard() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/status"
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Flask server error"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        // =====================================
+        // CONNECTION
+        // =====================================
+
+        const connection =
+            document.getElementById(
+                "connection"
+            );
+
+
+        connection.textContent =
+            "● Flask + YOLO Connected";
+
+
+        connection.className =
+            "connection connected";
+
+
+        // =====================================
+        // ROBOT
+        // =====================================
+
+        document.getElementById(
+            "robot-status"
+        ).textContent =
+            data.status;
+
+
+        document.getElementById(
+            "battery"
+        ).textContent =
+            data.battery + "%";
+
+
+        document.getElementById(
+            "location"
+        ).textContent =
+            data.location;
+
+
+        document.getElementById(
+            "speed"
+        ).textContent =
+            data.speed;
+
+
+        // =====================================
+        // ULTRASONIC
+        // =====================================
+
+        document.getElementById(
+            "distance"
+        ).textContent =
+            data.distance + " cm";
+
+
+        document.getElementById(
+            "obstacle"
+        ).textContent =
+            data.obstacle;
+
+
+        document.getElementById(
+            "action"
+        ).textContent =
+            data.action;
+
+
+        // =====================================
+        // LIGHTS
+        // =====================================
+
+        const lights =
+            document.getElementById(
+                "lights"
+            );
+
+
+        lights.textContent =
+            data.lights;
+
+
+        if (data.lights === "ON") {
+
+            lights.className =
+                "environment-status red";
+
+        } else {
+
+            lights.className =
+                "environment-status green";
+
+        }
+
+
+        // =====================================
+        // FANS
+        // =====================================
+
+        const fans =
+            document.getElementById(
+                "fans"
+            );
+
+
+        fans.textContent =
+            data.fans;
+
+
+        if (data.fans === "ON") {
+
+            fans.className =
+                "environment-status red";
+
+        } else {
+
+            fans.className =
+                "environment-status green";
+
+        }
+
+
+        // =====================================
+        // ENERGY ALERT
+        // =====================================
+
+        const alert =
+            document.getElementById(
+                "energy-alert"
+            );
+
+
+        if (
+            data.lights === "ON" ||
+            data.fans === "ON"
+        ) {
+
+            alert.innerHTML = `
+
+                <div class="alert">
+
+                    ⚠️ Energy Alert:
+                    Classroom equipment is ON.
+
+                </div>
+
+            `;
+
+        } else {
+
+            alert.innerHTML = `
+
+                <div class="safe">
+
+                    ✅ Lights and fans are OFF.
+
+                </div>
+
+            `;
+
+        }
+
+
+        // =====================================
+        // YOLO DETECTIONS
+        // =====================================
+
+        const detectionContainer =
+            document.getElementById(
+                "detections"
+            );
+
+
+        detectionContainer.innerHTML = "";
+
+
+        if (
+            data.detections &&
+            data.detections.length > 0
+        ) {
+
+
+            data.detections.forEach(
+                item => {
+
+                    const row =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    row.className =
+                        "detection";
+
+
+                    row.innerHTML = `
+
+                        <span>
+
+                            ${item.icon || "📦"}
+
+                            ${item.name}
+
+                        </span>
+
+
+                        <span
+                            class="confidence">
+
+                            ${item.confidence}%
+
+                        </span>
+
+                    `;
+
+
+                    detectionContainer
+                        .appendChild(row);
+
+                }
+            );
+
+
+        } else {
+
+            detectionContainer.innerHTML = `
+
+                <div class="detection">
+
+                    <span>
+                        No objects detected
+                    </span>
+
+                </div>
+
+            `;
+
+        }
+
+
+        // =====================================
+        // ACTIVITY
+        // =====================================
+
+        const activityContainer =
+            document.getElementById(
+                "activity"
+            );
+
+
+        activityContainer.innerHTML = "";
+
+
+        if (
+            data.activity &&
+            data.activity.length > 0
+        ) {
+
+
+            data.activity.forEach(
+                item => {
+
+                    const p =
+                        document.createElement(
+                            "p"
+                        );
+
+
+                    p.textContent =
+                        item;
+
+
+                    activityContainer
+                        .appendChild(p);
+
+                }
+            );
+
+
+        }
+
+
+        // =====================================
+        // TIME
+        // =====================================
+
+        document.getElementById(
+            "update-time"
+        ).textContent =
+            new Date()
+                .toLocaleTimeString();
+
+
+    }
+
+    catch (error) {
+
+
+        console.log(
+            "Waiting for Flask...",
+            error
+        );
+
+
+        const connection =
+            document.getElementById(
+                "connection"
+            );
+
+
+        connection.textContent =
+            "● Waiting for Flask / YOLO";
+
+
+        connection.className =
+            "connection disconnected";
+
+    }
+
+}
+
+
+// =========================================
+// FIRST UPDATE
+// =========================================
+
+updateDashboard();
+
+
+// =========================================
+// REAL-TIME UPDATE
+// =========================================
+
+setInterval(
+    updateDashboard,
+    1000
+);
+
+</script>
+
+
+</body>
+
+</html>
